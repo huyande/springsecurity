@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.secuity.springsecuity.dao.PermissionMapper" >
+
+    <resultMap id="BaseResultMap" type="com.secuity.springsecuity.bean.Permission" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+        <result column="pid" property="pid" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, name, code, type, url, sort, pid
+    </sql>
+
+
+    <select id="getPermissionsByRoleCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+          SELECT p.* FROM role r
+          LEFT JOIN role_permiss rp ON r.`id`=rp.`roleid`
+          LEFT JOIN permission p ON p.`id`=rp.`permisid` WHERE r.`rodecode`=#{rodecode,jdbcType=VARCHAR}
+    </select>
+
+</mapper>
